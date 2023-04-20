@@ -1,0 +1,22 @@
+    <div class="wrapper-show-file">
+        <div class="zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        <i class="fa-solid fa-circle-chevron-left"></i>
+        <i class="fa-solid fa-circle-chevron-right"></i>
+        <div class="pdf" *ngIf="fileCurrent.type=='pdf'">
+            <pdf-viewer [src]="fileCurrent.url" [render-text]="true" [original-size]="false" [show-all]="true" style="width: 100%; height: 500px"></pdf-viewer>
+        </div>
+        <div class="image" *ngIf="fileCurrent.type=='img'">
+            <img [src]="fileCurrent.url" alt="" srcset="" style="width: 100%; height: auto; max-height: 500px;">
+        </div>
+        
+    </div>
+    <div class="wrapper-list-file">
+        <div class="list-files">
+            <div class="image-icon" *ngFor="let img of _listFiles; let i = index">
+                <img [src]="img.type == 'img' ? img.url : '/assets/images/pdfDefault.png'" alt="" (click)="changeFileCurrent(i)">
+                <i class="fa-solid fa-circle-xmark" (click)="removeFile(i)" *ngIf="img.deleteFile"></i>
+            </div>                            
+        </div>
+        <i class="fa-solid fa-square-caret-left"></i>
+        <i class="fa-solid fa-square-caret-right"></i>
+    </div>

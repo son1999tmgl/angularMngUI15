@@ -1,0 +1,31 @@
+<app-template-base>
+    <div class="content-header">
+        <div>{{ title }}</div>
+        <div class="btn-action-header">
+            <div>
+                <button pButton class="p-button-sm" style="background-color: #0ab1fc;" [routerLink]="['/renderDeviceImportExcel']">
+                    <i class="pi pi-arrow-circle-up"></i>
+                    Tải file lên
+                </button>
+            </div>
+            <div>
+                <button pButton class="p-button-sm" style="background-color: #0ab1fc;"
+                    [routerLink]="['/renderDeviceInsertTokenLockUnLockComponent']">
+                    <i class="pi pi-plus"></i>
+                    Thêm mới giao dịch
+                </button>
+            </div>
+            <div>
+                <button pButton class="p-button-sm" style="background-color: #92c755; border-color: #8bc34a;">
+                    <i class="pi pi-replay"></i>
+                    Cập nhật danh sách reset pin
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="content">
+        <app-render-device-list-content></app-render-device-list-content>
+    </div>
+
+</app-template-base>

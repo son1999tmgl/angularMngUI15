@@ -1,0 +1,23 @@
+{
+    "/apigate": {
+        "target": "http://apigate.localdomain",
+        "secure": false,
+        "pathRewrite" : {
+            "^/apigate": "/"
+        }
+    },
+    "/api": {
+        "target": "http://authca.localdomain",
+        "secure": false,
+        "pathRewrite" : {
+            "^/api": "/"
+        }
+    },
+    "/fileApi": {
+        "target": "http://file.localdomain:3004",
+        "secure": false,
+        "pathRewrite" : {
+            "^/fileApi": "/"
+        }
+    }
+}

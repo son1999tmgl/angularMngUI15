@@ -1,0 +1,17 @@
+.filters_sim {
+    width: 100% !important;
+}
+.USED, .NOT_USE, .ARCHIVE{
+    padding: 4px 10px;
+    max-width: 150px;
+    text-align: center;
+    font-size: bold;
+    border-radius: 5px;
+}
+.USED, .ARCHIVE {
+    background-color: #e3e8ee;
+}
+.NOT_USE {
+    background-color: #8bc34a;
+    color: white;
+}

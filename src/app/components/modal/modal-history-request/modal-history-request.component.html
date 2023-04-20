@@ -1,0 +1,21 @@
+<!-- modal historyRequest -->
+<app-modal-base [idModal]="'modalHistoryRequest'" [title]="'Lịch sử giao dịch'"
+[style]="{'width': '800px', 'max-width': '100%'}">
+<div class="modal-body">
+    <div *ngFor="let request of dataHistoriesRequest" class="row requestHistory"
+        style="height: 100%;width: 100%;margin-bottom: 35px;-webkit-box-shadow: 1px 6px 6px 9px rgba(222,222,222,1);-moz-box-shadow: 1px 6px 6px 9px rgba(222,222,222,1);box-shadow: 2px 6px 6px 2px rgba(222,222,222,1);padding: 10px 0px">
+        <div class="col-sm-12">
+            <span class="col-sm-4"><b>Thời gian: </b>{{(request.updatedAt | date:'dd-mm-yyyy hh:mm' )}}</span>
+            <span class="col-sm-4"><b>Hoạt động: </b> {{showLabelActivity(request.type)}}</span>
+            <span class="col-sm-4"><b>{{ (request.creator_type == "agency")? "Đại lý": "Kiểm duyệt viên" }}:</b>
+                {{ request.creator_info.name }}</span>
+        </div>
+        <h3 *ngIf="request.type == 'reject'" class="col-sm-12"
+            style="padding: 0 30px 12px 30px; word-break: break-word;font-size: 15px;"><b style="color:red">Lý
+                do từ chối:</b> {{request.data.rejectReason}}</h3>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="actionCloseModal()" data-dismiss="modal">Close</button>
+</div>
+</app-modal-base>

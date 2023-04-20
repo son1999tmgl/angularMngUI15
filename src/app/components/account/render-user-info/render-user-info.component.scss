@@ -1,0 +1,54 @@
+.content-content{
+    background-color: unset !important;
+    display: flex;
+    justify-content: center;
+    min-height: unset;
+    .card_userInfo{
+        min-height: 100px;
+        // min-width: 700px;
+        width: 100%;
+        max-width: 800px;
+        background-color: white;
+        padding: 20px;
+        .card_userInfo_title{
+            color: #5e5e5e;
+            font-size: 22px;
+        }
+        .card_userInfo_content{
+            .card_userInfo_info {
+                label{
+                    color: #5e5e5e;
+                }
+                .card_userInfo_info_btn{
+                    padding: 0;
+                    display: flex;
+                    column-gap: 10px;
+                }
+                margin-left: 8.3%;
+                padding-right: 10px;
+            }
+            .card_userInfo_avatar{
+                padding-left: 10px;
+                .card_userInfo_avatar_avatar, .card_userInfo_avatar_btn{
+                    width: 100%;
+                    max-width: 200px;
+                }
+                .card_userInfo_avatar_avatar {
+                    height: auto;
+                    min-height: 200px;
+                    max-height: 250px;
+                    border: 1px solid #5e5e5e;
+                }
+            }
+            padding: 25px 30px 35px;
+        }
+    }
+}
+
+.modal-body-changePassword{
+    padding: 0px 40px;
+}
+.err {
+    color: red;
+    font-size: 0.8rem;
+}

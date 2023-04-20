@@ -1,0 +1,21 @@
+<p-dialog [(visible)]="_display" [closable]="false" [style]="{width: '250px'}">
+    <ng-template pTemplate="header">
+        <div class="header_customer">
+            <div class="title">Mã PUK</div>
+            <div class="icon">
+                <i *ngIf="enableChange==false" class="fa-regular fa-pen-to-square" (click)="enableChange=true"></i>
+                <i *ngIf="enableChange==true" class="fa-regular fa-floppy-disk" (click)="enableChange=false; updatePUK()"></i>
+            </div>
+        </div>
+    </ng-template>
+    <div class="body_certificate_info">
+        <div class="modal-body">
+            <input [(ngModel)]="_puk" type="text" style="width: 100%;" [disabled]="!enableChange">
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div style="text-align: center;">
+            <button  (click)="actionCloseModal()" pButton pRipple type="button" label="Đóng" class="p-button-secondary"></button>
+        </div>
+    </ng-template>
+</p-dialog>

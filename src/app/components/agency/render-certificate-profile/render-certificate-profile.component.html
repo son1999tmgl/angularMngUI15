@@ -1,0 +1,130 @@
+<div class="row_title">
+    <h3><b>Thông tin certificate profile</b></h3>
+</div>
+<div class="row_filters">
+    <div style="min-width: 300px;">
+        <input type="text" class="form-control input-focus" placeholder="Tìm kiếm tên, mã... "
+            [(ngModel)]="params.freeText" (ngModelChange)="actionListCertificateProfile()">
+    </div>
+    <div>
+        <button icon="pi pi-replay" type="button" (click)="displayModal=true" label="Thêm mới"
+            class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>
+            Thêm mới</button>
+    </div>
+</div>
+<div class="row content">
+
+    <div class="pane_renderCertificateProfile">
+        <div class="list_data_table">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Tên certificate profile</th>
+                        <th scope="col">Mã certificate profile</th>
+                        <th scope="col">Mã tmsra certificate profile</th>
+                        <th scope="col">Loại giao dịch</th>
+                        <th scope="col">Mô tả</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let certificateProfile of dataListCertificateProfiles" class="record"
+                    >
+                        <td (click)="openModalDetail(certificateProfile)">{{certificateProfile?.name || ''}}</td>
+                        <td (click)="openModalDetail(certificateProfile)">{{certificateProfile?.code || ''}}</td>
+                        <td (click)="openModalDetail(certificateProfile)">{{certificateProfile?.extraData?.tmsra?.certificateProfileCode || ''}}</td>
+                        <td (click)="openModalDetail(certificateProfile)">{{convertRequestType(certificateProfile?.requestType || '')}}</td>
+                        <td (click)="openModalDetail(certificateProfile)">{{certificateProfile?.description || ''}}</td>
+                        <td (click)="openModalDetail(certificateProfile)">
+                            <div class="label label-table label-success"
+                                *ngIf="certificateProfile.status == configSetting.certificateProfileStatus['publish'].code">
+                                {{convertCertificateStatus(certificateProfile.status)}}</div>
+                            <div class="label label-table label-mint"
+                                *ngIf="certificateProfile.status == configSetting.certificateProfileStatus['draft'].code">
+                                {{convertCertificateStatus(certificateProfile.status)}}</div>
+                            <div class="label label-table label-default"
+                                *ngIf="certificateProfile.status == configSetting.certificateProfileStatus['archive'].code">
+                                {{convertCertificateStatus(certificateProfile.status)}}</div>
+                        </td>
+                        <td>
+                            <span class="icon-circle bg-success text-white" *ngIf="certificateProfile?.status == configSetting.certificateProfileStatus['draft'].code || certificateProfile.status == configSetting.certificateProfileStatus['archive'].code">
+                                <i title="Công khai"
+                                    (click)="selectedCertificateProfileId=certificateProfile.id" data-toggle="modal"
+                                    data-target="#modalPublishCertificateProfile" class="fa-regular fa-star"
+                                    aria-hidden="true"></i>
+                            </span>
+                            <span class="icon-circle bg-primary text-white" *ngIf="certificateProfile?.status == configSetting.certificateProfileStatus['publish'].code">
+                                <i title="Lưu trữ"
+                                    (click)="selectedCertificateProfileId=certificateProfile.id" data-toggle="modal"
+                                    data-target="#modalArchiveCertificateProfile"
+                                    class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                            </span>
+                            <span class="icon-circle bg-danger text-white" *ngIf="certificateProfile?.status == configSetting.certificateProfileStatus['draft'].code && certificateProfile.isUsed == false">
+                                <i title="Xóa"
+                                    (click)="selectedCertificateProfileId=certificateProfile.id" data-toggle="modal"
+                                    data-target="#modalDeleteCertificateProfile"
+                                    class="fa fa-trash fa-solid fa-trash-can" aria-hidden="true"></i>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+                    [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<app-create-certificate-profile [(display)]="displayModal" [certificate]="selectedCertificateProfile" [agencyId]="_agencyId"
+    (displayChange)="displayChange($event)"></app-create-certificate-profile>
+
+
+
+<!-- modal -->
+<!-- Xoá -->
+<app-modal-base [idModal]="'modalDeleteCertificateProfile'" [title]="'Xoá certificateProfile'">
+    <div class="modal-body">
+        <span>Bạn có chắc muốn xoá certificateProfile này không ?</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" #closeModalDeleteCertificateProfile class="btn btn-secondary"
+            data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+            (click)="deleteCertificateProfile()">Duyệt</button>
+    </div>
+</app-modal-base>
+
+<!-- Công khai -->
+<app-modal-base [idModal]="'modalPublishCertificateProfile'" [title]="'Công khai chứng thư'">
+    <div class="modal-body">
+        <span>Bạn có chắc muốn công khai chứng thư này không ?</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" #closeModalPublishCertificateProfile class="btn btn-secondary"
+            data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+            (click)="publishCertificateProfile()">Duyệt</button>
+    </div>
+</app-modal-base>
+
+
+<!-- Lưu trữ -->
+<app-modal-base [idModal]="'modalArchiveCertificateProfile'" [title]="'Lưu trữ chứng thư'">
+    <div class="modal-body">
+        <span>Bạn có chắc muốn lưu trữ chứng thư này không ?</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" #closeModalArchiveCertificateProfile class="btn btn-secondary"
+            data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+            (click)="archiveCertificateProfile()">Duyệt</button>
+    </div>
+</app-modal-base>

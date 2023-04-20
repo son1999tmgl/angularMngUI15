@@ -1,0 +1,18 @@
+.content-content {
+    overflow: auto;
+}
+
+.ui-datepicker-content,
+.ui-calendar-content,
+.ui-calendar {
+    width: 300px;
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+}
+
+tr:hover{
+    cursor: pointer;
+}

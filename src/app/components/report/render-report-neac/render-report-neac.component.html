@@ -1,0 +1,162 @@
+<app-template-base>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+
+        <div class="filters-left">
+            <div>
+                <p-dropdown [options]="configSetting.quarters" [(ngModel)]="data.filters.quarter" placeholder="--Quý--"
+                    optionLabel="name" optionValue="code"></p-dropdown>
+            </div>
+            <div>
+                <p-calendar view="year" dateFormat="yy" [(ngModel)]="data.filters.year" inputId="yearpicker"
+                    placeholder="Năm"></p-calendar>
+            </div>
+            <div>
+                <p-dropdown [options]="configSetting.listDevices" placeholder="--Thiết bị--" optionLabel="name"
+                    optionValue="code" [showClear]="true" [(ngModel)]="data.filters.deviceType"></p-dropdown>
+            </div>
+
+        </div>
+        <div class="filters-right">
+            <div>
+                <p-button pRipple label="Tìm kiếm" icon="pi pi-search" (onClick)="actionSearch()"></p-button>
+            </div>
+            <div>
+                <button icon="pi pi-replay" pButton pRipple type="button" label="Làm mới"
+                    class="p-button-outlined p-button-secondary primeNG-customer-btn"></button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="content-content">
+
+        <div class="eq-box-sm">
+            <div>Số lượng CTS được cấp</div>
+            <hr>
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" rowspan="2">STT</th>
+                        <th  scope="col" rowspan="2">Nội dung</th>
+                        <th scope="col" colspan="3">Số lượng chứng thư số cấp</th>
+                        <th scope="col" rowspan="2">Tổng cộng</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">CTS của tổ chức doanh nghiệp</th>
+                        <th scope="col">CTS của cá nhân</th>
+                        <th scope="col">CTS của cá nhân thuộc tổ chức</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of providerCert">
+                        <td>{{item.key}}</td>
+                        <td>Tháng {{item.key}}</td>
+                        <td>{{item?.value?.ORGANIZATION || 0}}</td>
+                        <td>{{item?.value?.PERSONAL || 0}}</td>
+                        <td>{{item?.value?.STAFF || 0}}</td>
+                        <td>
+                            {{(item?.value?.ORGANIZATION || 0) + item?.value?.PERSONAL || 0 + item?.value?.STAFF || 0}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Tổng cộng</td>
+                        <td>{{totalProviderCert?.ORGANIZATION || 0}}</td>
+                        <td>{{totalProviderCert?.PERSONAL || 0}}</td>
+                        <td>{{totalProviderCert?.STAFF || 0}}</td>
+                        <td>{{totalProviderCert?.ALL}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <div class="eq-box-sm">
+            <div>Số lượng CTS đang thu hồi</div>
+            <hr>
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" rowspan="2">STT</th>
+                        <th  scope="col" rowspan="2">Nội dung</th>
+                        <th scope="col" colspan="3">Số lượng chứng thư số cấp</th>
+                        <th scope="col" rowspan="2">Tổng cộng</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">CTS của tổ chức doanh nghiệp</th>
+                        <th scope="col">CTS của cá nhân</th>
+                        <th scope="col">CTS của cá nhân thuộc tổ chức</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of revokeCert">
+                        <td>{{item.key}}</td>
+                        <td>Tháng {{item.key}}</td>
+                        <td>{{item?.value?.ORGANIZATION || 0}}</td>
+                        <td>{{item?.value?.PERSONAL || 0}}</td>
+                        <td>{{item?.value?.STAFF || 0}}</td>
+                        <td>
+                            {{(item?.value?.ORGANIZATION || 0) + item?.value?.PERSONAL || 0 + item?.value?.STAFF || 0}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Tổng cộng</td>
+                        <td>{{totalRevokeCert?.ORGANIZATION || 0}}</td>
+                        <td>{{totalRevokeCert?.PERSONAL || 0}}</td>
+                        <td>{{totalRevokeCert?.STAFF || 0}}</td>
+                        <td>{{totalRevokeCert?.ALL}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <div class="eq-box-sm">
+            <div>Số lượng CTS đang hoạt động</div>
+            <hr>
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" rowspan="2">STT</th>
+                        <th  scope="col" rowspan="2">Nội dung</th>
+                        <th scope="col" colspan="3">Số lượng chứng thư số cấp</th>
+                        <th scope="col" rowspan="2">Tổng cộng</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">CTS của tổ chức doanh nghiệp</th>
+                        <th scope="col">CTS của cá nhân</th>
+                        <th scope="col">CTS của cá nhân thuộc tổ chức</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of availableCert; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.key}}</td>
+                        <td>{{item?.value?.ORGANIZATION || 0}}</td>
+                        <td>{{item?.value?.PERSONAL || 0}}</td>
+                        <td>{{item?.value?.STAFF || 0}}</td>
+                        <td>
+                            {{(item?.value?.ORGANIZATION || 0) + item?.value?.PERSONAL || 0 + item?.value?.STAFF || 0}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Tổng cộng</td>
+                        <td>{{totalAvailableCert?.ORGANIZATION || 0}}</td>
+                        <td>{{totalAvailableCert?.PERSONAL || 0}}</td>
+                        <td>{{totalAvailableCert?.STAFF || 0}}</td>
+                        <td>{{totalAvailableCert?.ALL}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</app-template-base>

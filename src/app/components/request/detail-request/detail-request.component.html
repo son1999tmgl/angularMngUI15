@@ -1,0 +1,270 @@
+<app-template-base>
+    <div class="content-header" [ngClass]="{'headerReject':requestInfo.StatusCode == 'reject'}">
+        <span>{{title}}</span>
+        <p *ngIf="requestInfo.StatusCode == 'reject'" class="rejectReason">Lý do bị từ chối:
+            {{requestInfo.RejectReason}}</p>
+
+    </div>
+    <div class="content-full">
+        <div class="container">
+            <form [formGroup]="formInfoCustomer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="row row-input">
+                            <div class="col-lg-3">Loại khách hàng: </div>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control"
+                                    [value]="configSetting.clientConfig[requestInfo.CustomerInfo.Type || ''] ? configSetting.clientConfig[requestInfo.CustomerInfo.Type || ''].name : 'Loại khách hàng'"
+                                    disabled placeholder="Loại khách hàng">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="title">Thông tin khách hàng</div>
+                    <div class="col-lg-6">
+                        <div class="row row-input">
+                            <label class="col-lg-3" for="requestName">Tên giao dịch:</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" placeholder="Tên giao dịch"
+                                     [disabled]="disable"
+                                     id="requestName"
+                                    formControlName="requestName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row row-input">
+                <div class="col-lg-3">Mã số:</div>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" placeholder="Mã số" [(ngModel)]="requestInfo.CustomerCer"
+                        disabled="true">
+                </div>
+            </div>
+            <div class="row row-input">
+                <div class="col-lg-3">Tỉnh/ Thành phố:</div>
+                <div class="col-lg-8">
+                    <input [disabled]="disable" type="text" class="form-control" placeholder="Tỉnh/ Thành phố"
+                        [(ngModel)]="requestInfo.CustomerInfo.CityName">
+                </div>
+            </div>
+            <div class="row row-input">
+                <div class="col-lg-3">Quận / Huyện:</div>
+                <div class="col-lg-8">
+                    <input [disabled]="disable" type="text" class="form-control" placeholder="Quận / Huyện"
+                        [(ngModel)]="requestInfo.CustomerInfo.DistrictName">
+                </div>
+            </div>
+            <div class="row row-input">
+                <div class="col-lg-3">Email:</div>
+                <div class="col-lg-8">
+                    <input [disabled]="disable" type="text" class="form-control" placeholder="Email"
+                        [(ngModel)]="requestInfo.CustomerInfo.Email">
+                </div>
+            </div>
+            <div class="row row-input">
+                <div class="col-lg-3">Số điện thoại:</div>
+                <div class="col-lg-8">
+                    <input [disabled]="disable" type="text" class="form-control" placeholder="Số điện thoại"
+                        [(ngModel)]="requestInfo.CustomerInfo.Phone">
+                </div>
+            </div>
+        </div>
+
+        <!-- Khách hàng doanh nghiệp -->
+        <div class="col-lg-6" *ngIf="requestInfo.CustomerInfo.Type == configSetting.clientConfig['ORGANIZATION'].code">
+            <app-my-image [listFileInput]="listLicenseFile" (listFiles)="handleFiles($event)"></app-my-image>
+            <div class="form-check air-checkbox">
+                <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something"
+                    [(ngModel)]="requestInfo.ConfirmLicenseFile" [checked]="requestInfo.ConfirmLicenseFile">
+                <label class="form-check-label">Giấy phép</label>
+            </div>
+        </div>
+
+
+        <!-- Khách hàng cá nhân -->
+        <div class="col-lg-6" *ngIf="requestInfo.CustomerInfo.Type == configSetting.clientConfig['PERSONAL'].code">
+            <app-my-image [listFileInput]="listIdCardFile" (listFiles)="handleFiles($event)"></app-my-image>
+            <div class="form-check air-checkbox">
+                <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something"
+                    [(ngModel)]="requestInfo.ConfirmIdCardFile" [checked]="requestInfo.ConfirmIdCardFile">
+                <label class="form-check-label">Giấy phép</label>
+            </div>
+        </div>
+        <!-- </div> -->
+
+
+        <!-- Kh cá nhân thuộc tổ chức -->
+        <div class="row" *ngIf="requestInfo.CustomerInfo.Type == configSetting.clientConfig['ORGANIZATION'].code">
+            <div class="title">Thông tin người đại diện pháp luật</div>
+            <div class="col-lg-6">
+                <div class="row row-input">
+                    <div class="col-lg-3">Họ và tên: </div>
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control"
+                            [(ngModel)]="requestInfo.CustomerInfo.RepresentativeName"
+                            placeholder="Thông tin người đại diện pháp luật" [disabled]="disable">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <app-my-image [listFileInput]="listRepresentativeFile" (listFiles)="handleFiles($event)"></app-my-image>
+                <div class="form-check air-checkbox">
+                    <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something"
+                        [(ngModel)]="requestInfo.ConfirmRepresentativeFile"
+                        [checked]="requestInfo.ConfirmRepresentativeFile">
+                    <label class="form-check-label">Giấy tờ công chứng của người đại diện</label>
+                </div>
+            </div>
+        </div>
+        <!-- </form> -->
+
+
+        <div class="row">
+            <div class="title">Thông tin giao dịch và biểu mẫu</div>
+            <div class="col-lg-6">
+                <div class="row row-input">
+                    <div class="col-lg-3">Thiết bị: </div>
+                    <div class="col-lg-8">
+                        <input type="text" disabled="true" class="form-control" placeholder="Thiết bị"
+                            [(ngModel)]="requestInfo.DeviceType">
+                    </div>
+                </div>
+                <div class="row row-input">
+                    <div class="col-lg-3">Loại giao dịch: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" placeholder="Loại giao dịch"
+                            [(ngModel)]="requestInfo.TypeRequestTitle">
+                    </div>
+                </div>
+                <div class="row row-input">
+                    <div class="col-lg-3">Gói cước: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" placeholder="Gói cước"
+                            [(ngModel)]="requestInfo.CertificateProfileCode">
+                    </div>
+                </div>
+
+                <div class="row row-input" *ngIf="requestInfo.SerialNo!=''">
+                    <div class="col-lg-3">Số serial chứng thư: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" placeholder="Số serial chứng thư"
+                            [(ngModel)]="requestInfo.SerialNo">
+                    </div>
+                </div>
+
+                <!-- Dành cho token -->
+                <div class="row row-input" *ngIf="requestInfo.DeviceType == 'TOKEN' && requestInfo.ActivationCode!=''">
+                    <div class="col-lg-3">Mã kích hoạt Token : </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" placeholder="Mã kích hoạt Token ">
+                    </div>
+                </div>
+                <div class="row row-input" *ngIf="requestInfo.DeviceType == 'TOKEN' && requestInfo.ActivationCode!=''">
+                    <div class="col-lg-3">Loại Token: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" placeholder="Loại Token">
+                    </div>
+                </div>
+
+                <!-- dành cho sim -->
+                <div class="row row-input" *ngIf="requestInfo.DeviceType == 'SIM'">
+                    <div class="col-lg-3">Số điện thoại: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" type="text" class="form-control" [(ngModel)]="requestInfo.Phone"
+                            placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="row row-input" *ngIf="requestInfo.DeviceType == 'SIM'">
+                    <div class="col-lg-3">Số ICCID của sim: </div>
+                    <div class="col-lg-8">
+                        <input disabled="true" [(ngModel)]="requestInfo.ICCID" type="text" class="form-control"
+                            placeholder="Số ICCID của sim">
+                    </div>
+                </div>
+
+
+                <div class="row row-input">
+                    <div class="col-lg-3">Hồ sơ đăng ký: </div>
+                    <div class="col-lg-8">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <app-my-image [listFileInput]="listRegistrationFile" (listFiles)="handleFiles($event)"></app-my-image>
+                <div class="form-check air-checkbox">
+                    <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something"
+                        [(ngModel)]="requestInfo.ConfirmRegistrationFile"
+                        [checked]="requestInfo.ConfirmRegistrationFile">
+                    <label class="form-check-label">Hồ sơ đăng ký</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- </div> -->
+    <div class="content-footer">
+        <button pButton pRipple type="button" label="Duyệt" style="background-color: #0ab1fc;" data-toggle="modal"
+            data-target="#modalApprovalRequest"
+            *ngIf="requestInfo.StatusCode == configSetting.requestStatus['progress'].code"></button>
+        <button pButton pRipple type="button" label="Huỷ hồ sơ" style="background-color: #294f75;" data-toggle="modal"
+            data-target="#modalArchiveRequest" *ngIf="requestInfo.StatusCode == configSetting.requestStatus['progress'].code
+        || requestInfo.StatusCode == configSetting.requestStatus['approved'].code"></button>
+        <button pButton pRipple type="button" label="Từ chối" style="background-color: #f55145" data-toggle="modal"
+            data-target="#modalRejectRequest" *ngIf="requestInfo.StatusCode == configSetting.requestStatus['progress'].code
+        || requestInfo.StatusCode == configSetting.requestStatus['pendingConfirmation'].code"></button>
+        <button pButton pRipple [routerLink]="['/renderListRequest']" type="button" label="Quay lại"
+            class="p-button-secondary" (click)="comeBack()"></button>
+
+
+        <!-- Huỷ giao dịch -->
+        <app-modal-base [idModal]="'modalArchiveRequest'" [title]="'Huỷ giao dịch'">
+            <div class="modal-body">
+                <textarea id="w3review" name="w3review" rows="6" placeholder="Lý do"
+                    [(ngModel)]="data.reason.archiveRequest"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalArchiveRequest class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+                    (click)="archiveRequest()">Huỷ</button>
+            </div>
+        </app-modal-base>
+
+
+        <!-- Từ chối -->
+        <app-modal-base [idModal]="'modalRejectRequest'" [title]="'Từ chối giao dịch'">
+            <div class="modal-body">
+                <textarea id="w3review" name="w3review" rows="6" placeholder="Lý do"
+                    [(ngModel)]="data.reason.rejectRequest"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalRejectRequest class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #f55145;"
+                    (click)="rejectRequest()">Từ chối</button>
+            </div>
+        </app-modal-base>
+
+
+        <!-- Duyệt -->
+        <app-modal-base [idModal]="'modalApprovalRequest'" [title]="'Duyệt'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn duyệt hồ sơ này.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalApprovalRequest class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+                    (click)="approvalRequest()">Duyệt</button>
+            </div>
+        </app-modal-base>
+
+
+
+    </div>
+</app-template-base>

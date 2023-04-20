@@ -1,0 +1,16 @@
+.pane_renderToken {
+    background-color: white;
+    .header {
+        display: flex;
+        justify-content: flex-end;
+        .btn-info.pull-right {
+            margin: 20px 0;
+        }
+    }
+}
+.row_filters {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

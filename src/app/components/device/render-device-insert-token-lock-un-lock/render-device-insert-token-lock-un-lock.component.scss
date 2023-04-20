@@ -1,0 +1,101 @@
+.title{
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #4d627b;
+    >div {
+        float: right;
+    }
+}
+
+.frame-file {
+    background-color: #4d627b;
+}
+
+
+.wrapper-show-file {
+    border: 1px solid black;
+    position: relative;
+    width: 100%;
+    height: 520px;
+    .zoom i{
+        font-size: 25px;
+        position: absolute;
+        z-index: 1;
+        top: 5px;
+        left: 5px;
+    }
+    .zoom i:hover{
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+    .fa-circle-chevron-left{
+       
+        left: 5px;
+    }
+    .fa-circle-chevron-right {
+        right: 5px;
+    }
+    .fa-circle-chevron-left, .fa-circle-chevron-right {
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        z-index: 10;
+    }
+    .fa-circle-chevron-left:hover, .fa-circle-chevron-right:hover{
+        color: #3e70ac;
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}
+
+.wrapper-list-file {
+    height: 150px;
+    position: relative;
+    margin-top: 20px;
+    .fa-square-caret-left{
+        left: 5px;
+    }
+    .fa-square-caret-right {
+        right: 5px;
+    }
+    .fa-square-caret-left, .fa-square-caret-right {
+        font-size: 20px;
+        position: absolute;
+        top: 40%;
+    }
+    .fa-square-caret-left:hover, .fa-square-caret-right:hover{
+        color: #3e70ac;
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+    .list-files{
+        height: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        column-gap: 10px;
+        .image-icon{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 5px;
+            i{
+                font-size: 20px;
+                color: #dd3636;
+            }
+            i:hover{
+                transform: scale(1.3);
+                color: #ef0505;
+                cursor: pointer;
+            }
+            img{
+                width: 100px;
+                height: 80%;
+            }
+        }
+    }
+}

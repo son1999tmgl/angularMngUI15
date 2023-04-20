@@ -1,0 +1,80 @@
+<app-template-base>
+    <div class="content-header">
+        <div class="row" style="align-items: center;">
+            <div class="col-md-4">{{ title }}</div>
+            <div class="col-md-8">
+                <p-progressBar [value]="value"></p-progressBar>
+            </div>
+        </div>
+    </div>
+    <div class="content-filters">
+        <div class="btn-action-header">
+            <input #inputFileImport type="file" name="iportFile" (change)="readerFile($event)" id="importFile" class="hidden">
+            <button pButton class="p-button-sm" style="background-color: #0ab1fc;" (click)="actionImortFile()">
+                <i class="pi pi-arrow-circle-up"></i>
+                Tải file lên
+            </button>
+            <button pButton class="p-button-sm" style="background-color: #0ab1fc;"
+                (click)="actionCreateRequestDevices('UNLOCK_DEVICE')">
+                <i class="fa-solid fa-lock-open"></i>
+                Mở khoá
+            </button>
+            <button pButton class="p-button-sm" style="background-color: #0ab1fc;" (click)="actionCreateRequestDevices('LOCK_DEVICE')">
+                <i class="fa-solid fa-lock"></i>
+                Khoá
+            </button>
+
+        </div>
+    </div>
+    <div class="content-content">
+        <div class="filters">
+            <p-dropdown [options]="configSetting.listDevices" (onChange)="changeFilters()" [(ngModel)]="device.deviceType" optionLabel="name"
+                optionValue="code" placeholder="--Thiết bị--" [showClear]="true"></p-dropdown>
+            <p-dropdown [options]="listDeviceStatus" [(ngModel)]="device.deviceStatus" optionLabel="name"
+                optionValue="code" placeholder="--Trạng thái thiết bị--" (onChange)="changeFilters()" [showClear]="true"></p-dropdown>
+        </div>
+        <div class="content-table">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" (click)="actionSelectAll()" [(ngModel)]="dataSelectAll"> 
+                            <span>Chọn tất cả</span>
+                        </th>
+                        <th scope="col">Khách hàng</th>
+                        <th scope="col">MST/CMND</th>
+                        <th scope="col">Mã chứng thư</th>
+                        <th scope="col">Mã thiết bị</th>
+                        <th scope="col">Trạng thái thiết bị</th>
+                        <th scope="col">Thiết bị</th>
+                        <th scope="col">Trạng thái</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let device of listDeviceCustomer">
+                        <td style="text-align: center;">
+                            <input type="checkbox" [checked]="objectSelected[device.id]" [(ngModel)]="objectSelected[device.id]">
+                        </td>
+                        <td>{{device?.customer?.commonName || ''}}</td>
+                        <td>{{device?.customer?.identifyNo || ''}}</td>
+                        <td>{{device?.certSerialNo || ''}}</td>
+                        <td>{{device?.deviceInfo?.ICCID || ''}}</td>
+                        <td>{{configSetting.certificateStatus[device.status].name}}</td>
+                        <td>{{device?.deviceType || ''}}</td>
+                        <td style="text-align: center">
+                            <span style="color: #3b8dd5;" *ngIf="device.isSuccess"> Thành công</span>
+                            <span style="color: red;" *ngIf="device.isErr"> Thất bại</span>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+                    [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+            </div>
+        </div>
+    </div>
+
+</app-template-base>

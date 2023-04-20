@@ -1,0 +1,75 @@
+<app-template-base>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+        <app-loading></app-loading>
+        <div class="filters-left">
+            <div>
+                <p-calendar [(ngModel)]="data.filters.from" placeholder="Từ ngày" class="input-focus"
+                    (onSelect)="changeFilters('from')"></p-calendar>
+            </div>
+            <div>
+                <p-calendar [(ngModel)]="data.filters.to" placeholder="Đến ngày" class="input-focus"></p-calendar>
+            </div>
+            <div>
+                <p-dropdown [options]="agencies" [(ngModel)]="data.filters.agency" placeholder="--Đại lý--"
+                    optionLabel="name" optionValue="code"
+                    (onChange)="changeFilters('agency')"></p-dropdown>
+            </div>
+            <div>
+                <input type="text" class="form-control input-focus" placeholder="Tìm kiếm..."
+                    [(ngModel)]="data.filters.identifyNo" (input)="changeFilters('search')">
+            </div>
+        </div>
+        <div class="filters-right">
+            <div>
+                <p-button pRipple label="Tìm kiếm" icon="pi pi-search" (onClick)="actionSearch()"></p-button>
+            </div>
+            <div>
+                <button icon="pi pi-replay" pButton pRipple type="button" label="Làm mới"
+                    class="p-button-outlined p-button-secondary primeNG-customer-btn" (click)="actionRefresh()"></button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="content-content">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" style="width: 11%;">ID</th>
+                    <th scope="col">Tên khách hàng</th>
+                    <th scope="col">Đại lý</th>
+                    <th scope="col">Loại giao dịch</th>
+                    <th scope="col">Loại khách hàng</th>
+                    <th scope="col">Tên gói</th>
+                    <th scope="col">Ngày cấp</th>
+                    <th scope="col">Ngày thu hồi</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Gửi NEAC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of dataListFileNEAC">
+                    <td title="{{ item.id }}">{{ item.id }}</td>
+                    <td title="{{ item.customerName }}">{{ item.customerName }}</td>
+                    <td title="{{ item.agency }}">{{ item.agency }}</td>
+                    <td title="{{ item.typeTransactionTitle }}">{{ item.typeTransactionTitle }}</td>
+                    <td title="{{ item.typeCustomer }}">{{ item.typeCustomer }}</td>
+                    <td title="{{ item.namePackage }}">{{ item.namePackage }}</td>
+                    <td title="{{ item.createTime | date}}">{{ item.createTime | date }}</td>
+                    <td title="{{ item.revokeTime | date}}">{{ item.revokeTime | date }}</td>
+                    <td title="{{ item.statusTitle }}">{{ item.statusTitle }}</td>
+                    <td title="{{ item.id }}">
+                        <input type="checkbox" value="{{ item.id }}" (click)="updateRequestToNEAC(item.id, item.syncToNEAC)" [checked]="item.syncToNEAC">
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord" [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+        </div>
+    </div>
+
+</app-template-base>

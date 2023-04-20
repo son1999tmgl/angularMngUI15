@@ -1,0 +1,6 @@
+- màn phê duyệt hố sơ
+    - lỗi lọc khi trạng thái là 'mới'
+
+- màn chi tiết yêu cầu:
+    - giao dịch hoàn thành -> thiếu hiển thị thông tin xác nhận khách hàng
+    - các giao dịch đã có chứng thư. hiển thị thiếu "Chứng thư số hết hạn từ ngày 31-12-2022. Gia hạn trước ngày 01-12-2022"(cuối trang)

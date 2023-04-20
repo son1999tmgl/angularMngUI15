@@ -1,0 +1,18 @@
+.header_customer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .title {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    .icon {
+        font-size: 1.2rem;
+        color: rgb(67, 55, 206);
+        transition: 0.3s;
+    }
+    .icon:hover {
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+}

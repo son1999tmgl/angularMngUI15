@@ -1,0 +1,55 @@
+<p-dialog header="{{title}}" [(visible)]="display" [modal]="true" [style]="{width: '100vw', maxWidth: '800px'}"
+    (onHide)="closeModal()">
+    <div class="body_create_certificate">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Tên certificate profile: </label>
+            <div class="col-sm-9">
+                <input type="text" placeholder="Tên certificate profile" class="form-control" [(ngModel)]="_certificate.name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Mã certificate profile: </label>
+            <div class="col-sm-9">
+                <input autocomplete="off" type="text" placeholder="Mã certificate profile" class="form-control" [(ngModel)]="_certificate.code" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Loại giao dịch:</label>
+            <div class="col-sm-9">
+                <p-dropdown appPrimeDropDown [options]="configSetting.requestTypeConfig" [(ngModel)]="_certificate.requestType"
+                                optionLabel="name" optionValue="code" placeholder="--Loại giao dịch--" [showClear]="true"></p-dropdown>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Thời gian certificate profile:</label>
+            <div class="col-sm-9">
+                <div class="input-group mar-btm">
+                    <input autocomplete="off" type="number" placeholder="Thời gian certificate profile" class="form-control" [(ngModel)]="_certificate.durationTime" />
+                    <span class="input-group-addon"><i>/ Ngày</i></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Mô tả: </label>
+            <div class="col-sm-9">
+                <textarea autocomplete="off" type="text" placeholder="Mô tả" class="form-control"  [(ngModel)]="_certificate.description" ></textarea>
+            </div>
+        </div>
+
+
+    </div>
+
+    <ng-template pTemplate="footer">
+        <!-- Thêm mới -->
+        <button *ngIf="check==false" type="button" (click)="actionCreateCertificate()" class="btn btn-secondary" style="background-color: #0d6efd;"
+            data-dismiss="modal">Cập nhật</button>
+
+        <!-- Cập nhật -->
+        <button *ngIf="check==true" type="button" (click)="actionUpdateCertificate()" class="btn btn-secondary" style="background-color: #0d6efd;"
+            data-dismiss="modal">Cập nhật</button>
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+    </ng-template>
+</p-dialog>

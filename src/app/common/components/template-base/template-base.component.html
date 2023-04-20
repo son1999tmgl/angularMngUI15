@@ -1,0 +1,183 @@
+<div class="container-fluid">
+  <app-loading></app-loading>
+  <div class="row header" #header_base>
+    <div class="col-2 top-left" [ngClass]="{'showMenu': !showMenu}">
+      <!-- Nội dung của phần trên bên trái -->
+      <div class="wrapper-top-left">
+        <img src="/assets/images/headerLogo.png" class="headerLogo">
+        <div style="display: flex;width: 100%;" [ngClass]="{'hidden': !showMenu}">
+          <span><b>Quản trị CA</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="top-right">
+      <i class="fa-solid fa-bars" (click)="toggleMenu()"></i>
+    </div>
+  </div>
+  <div class="row middle" #middle_base>
+
+  </div>
+  <div class="row content" #content_base>
+    <div class="col-2 bottom-left" [ngClass]="{'showMenu': !showMenu}">
+      <div class="wrapper-infoUser" [ngClass]="{'hidden': !showMenu}">
+        <img src="/assets/images/avatarDefault.jpg" alt="" srcset="" id="avatar">
+        <div class="wrapper-username">
+          <div class="username">{{ userInfo.name  }}</div>
+          <i class="fa-solid fa-caret-down" (click)="showEventUsername = !showEventUsername"></i>
+        </div>
+
+        <div class="userInfo-action" [ngClass]="{'hidden': showEventUsername}">
+          <div class="userInfo-account">
+            <a [routerLink]="['/renderUserInfo']">
+              <i class="fa-regular fa-user"></i>
+              <span>Tài khoản</span>
+            </a>
+          </div>
+          <div class="userInfo-logout">
+            <a (click)="logout()">
+              <i class="fa-solid fa-unlock"></i>
+              <span>Đăng xuất</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <input type="text" class="form-control global-search" placeholder="Tìm kiếm..." [ngClass]="{'hidden': !showMenu}" [(ngModel)]="data.filters.freeText" (keyup.enter)="searchCustomer()">
+      <ul id="card-menuLeft">
+
+        <li class="wrapper_menu_item" *ngIf="isCensorCa" [ngClass]="{'active': linkActive === 'renderListRequest'}" [routerLink]="['/renderListRequest']" >
+          <div class="wrapper_menu_item_icon">
+            <i class="fa fa-briefcase"></i>
+          </div>
+          <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+            Phê duyệt hồ sơ
+          </span>
+        </li>
+
+        <li class="wrapper_menu_item" *ngIf="isSuperAdmin" [routerLink]="['/renderSimProvisioningManagement']"
+        [ngClass]="{'active': linkActive === 'renderSimProvisioningManagement'}">
+          <div class="wrapper_menu_item_icon">
+            <i class="fa fa-credit-card-alt"></i>
+          </div>
+          <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+            Quản lý sim
+          </span>
+        </li>
+
+        <li class="wrapper_menu_item active" *ngIf="isCensorCa" [routerLink]="['/listFileNEAC']" [ngClass]="{'active': linkActive === 'listFileNEAC'}">
+          <div class="wrapper_menu_item_icon">
+            <i class="fa fa-briefcase"></i>
+          </div>
+          <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+            Hồ sơ NEAC
+          </span>
+        </li>
+
+        <!-- Menu có submenu  -->
+        <div class="menuDown">
+          <li class="wrapper_menu_item" *ngIf="isCensorCa" [ngClass]="{'active': linkActive === 'renderDeviceList'}">
+            <div class="wrapper_menu_item_icon">
+              <i class="fa fa-book"></i>
+            </div>
+            <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+              Thiết bị phần mềm
+            </span>
+            <div class="menu_itemIcon_showSubmenu" [ngClass]="{'hidden': !showMenu}">
+              <i class="fa-solid fa-caret-down" [hidden]="showSubMenuDevice" (click)="showSubMenuDevice=true"></i>
+              <i class="fa-solid fa-caret-up" [hidden]="!showSubMenuDevice" (click)="showSubMenuDevice=false"></i>
+            </div>
+
+          </li>
+          <!-- submenu -->
+          <ul class="submenu" [hidden]="!showMenu || !showSubMenuDevice">
+            <li [ngClass]="{'active-subMenu': linkActive === 'renderDeviceList'}">
+              <a [routerLink]="['/renderDeviceList']">Thiết bị</a>
+            </li>
+            <li>
+              <a>vCSP</a>
+            </li>
+            <li>
+              <a>Dịch vụ khách hàng</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+        <li class="wrapper_menu_item" *ngIf="isSuperAdmin" [routerLink]="['/renderAgency']" [ngClass]="{'active': linkActive === 'renderAgency'}">
+          <div class="wrapper_menu_item_icon">
+            <i class="fa fa-briefcase"></i>
+          </div>
+          <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+            Tổng đại lý
+          </span>
+        </li>
+
+
+        <li class="wrapper_menu_item" *ngIf="isSuperAdmin" [routerLink]="['/renderUser']" [ngClass]="{'active': linkActive === 'renderUser'}">
+          <div class="wrapper_menu_item_icon">
+            <i class="fa fa-user"></i>
+          </div>
+          <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+            Người dùng
+          </span>
+        </li>
+
+
+        <!-- Menu có submenu  -->
+        <div class="menuDown">
+            <li class="wrapper_menu_item" *ngIf="isManager || isSale"> 
+              <div class="wrapper_menu_item_icon">
+                <i class="fa fa-book"></i>
+              </div>
+              <span class="wrapper_menu_item_title" [ngClass]="{'hidden': !showMenu}">
+                Báo cáo
+              </span>
+              <div class="menu_itemIcon_showSubmenu" [ngClass]="{'hidden': !showMenu}">
+                <i class="fa-solid fa-caret-down" [hidden]="showSubMenuReport" (click)="showSubMenuReport=true"></i>
+                <i class="fa-solid fa-caret-up" [hidden]="!showSubMenuReport" (click)="showSubMenuReport=false"></i>
+
+              </div>
+  
+            </li>
+            <!-- submenu -->
+            <ul *ngIf="isManager || isSale" class="submenu" [hidden]="!showMenu || !showSubMenuReport">
+              <li *ngIf="isManager" [ngClass]="{'active-subMenu': linkActive === 'renderReportNEAC'}">
+                <a [routerLink]="['/renderReportNEAC']">Báo cáo NEAC</a>
+              </li>
+              <li *ngIf="isManager" [ngClass]="{'active-subMenu': linkActive === 'renderReportCert'}">
+                <a [routerLink]="['/renderReportCert']">Thông tin Cert gửi NEAC</a>
+              </li>
+              <li *ngIf="isManager" [ngClass]="{'active-subMenu': linkActive === 'renderReportCross'}">
+                <a [routerLink]="['/renderReportCross']">Báo cáo đối soát</a>
+              </li>
+              <li *ngIf="isSale" [ngClass]="{'active-subMenu': linkActive === 'renderReportExpired'}">
+                <a [routerLink]="['/renderReportExpired']">Báo cáo hết hạn</a>
+              </li>
+            </ul>
+          </div>
+
+
+
+      </ul>
+    </div>
+
+
+
+    <div class="bottom-right">
+      <div class="content">
+          <ng-content select=".content-header"></ng-content>
+          <ng-content select=".content-filters"></ng-content>
+
+          <ng-content select=".content"></ng-content>
+
+          <ng-content select=".content-content"></ng-content>
+          <!-- Nội dung là 1 khối thống nhất -->
+          <ng-content select=".content-full"></ng-content>
+
+          <ng-content select=".content-footer"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+.content-content {
+    background-color: unset;
+}
+i:hover{
+    cursor: pointer;
+}
+
+.info_representative{
+    padding: 0 10px;
+}
+.body_info_customer {
+    // flex-wrap: nowrap !important;
+    row-gap: 20px !important;
+
+    .info_customer {
+        min-height: 100vh;
+        background-color: white;
+        margin-right: 20px;
+        padding: 20px;
+
+        .info_overview {
+            .listFile {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: 75px;
+                margin: 15px 0;
+
+                .data_listFile {
+                    width: 80%;
+                }
+
+                position: relative;
+
+                .icon_direction {
+                    position: absolute;
+                    font-size: 28px;
+                    top: 20px;
+                }
+                .icon_direction{
+                    cursor: pointer;
+                }
+
+                .fa-circle-right {
+                    right: 10px;
+                }
+                .fa-circle-left {
+                    left: 10px;
+                }
+
+            }
+        }
+    }
+
+    .info_cert {
+        min-height: 100vh;
+        background-color: white;
+        // min-width: 200px;
+        flex: 1;
+    }
+}
+.tab_base{
+    margin-top: 30px;
+}
+
+.cert{
+    color: white;
+    padding: 10px;
+    width: 100%;
+    min-height: 100px;
+    background-color: #3a444e;
+    margin-top: 30px;
+    display: block;
+    .cert_title{
+        i{
+            color: red;
+            margin-right: 5px;
+        }
+    }
+}

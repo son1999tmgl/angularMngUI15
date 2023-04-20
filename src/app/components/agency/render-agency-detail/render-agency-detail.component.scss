@@ -1,0 +1,35 @@
+.content-content {
+    background-color: unset;
+    >div>div {
+        background-color: white;
+        background-clip: content-box;
+        padding-left: 0px;
+        .panel {
+            padding: 15px;
+        }
+    }
+}
+
+.pull-right {
+    float: right;
+    margin-bottom: 5px;
+    color: while;
+}
+
+.row.cert {
+    margin-top: 30px;
+    >div {
+        background-clip: unset !important;
+        padding: 15px !important;
+    }
+}
+
+.btn-update {
+    padding: 30px 10px;
+    background-clip: unset !important;
+    display: flex;
+    justify-content: flex-end;
+    button {
+        color: white;
+    }
+}

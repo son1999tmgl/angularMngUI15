@@ -1,0 +1,143 @@
+<app-template-base>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-full">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row row-input">
+                        <div class="col-lg-3">Khách hàng: </div>
+                        <div class="col-lg-8">
+                            <p-dropdown appPrimeDropDown [options]="dataListClientType" [(ngModel)]="data.customerType"
+                                optionLabel="name" optionValue="code" [disabled]="disableIdentifyNo"></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="title">Thông tin khách hàng</div>
+                <div class="col-lg-6">
+                    <div class="row row-input">
+                        <div class="col-lg-3">Mã số:</div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" [disabled]="disableIdentifyNo"
+                                [(ngModel)]="data.identifyNo" placeholder="Mã số" 
+                                (keyup.enter)="searchCustomer();">
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Tỉnh/ Thành phố:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control" [ngModel]="dataCustomer.CityName"
+                                placeholder="Tỉnh/ Thành phố">
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Email:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control"
+                                [ngModel]="dataCustomer.CustomerInfo?.email || ''" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="row row-input" *ngIf="data.customerType=='ORGANIZATION'">
+                        <div class="col-lg-3">Họ và tên người đại diện:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control"
+                                [ngModel]="dataCustomer.CustomerInfo?.email || ''"
+                                placeholder="Họ và tên người đại diện">
+                        </div>
+                    </div>
+                    <div class="row row-input" *ngIf="data.customerType=='STAFF'">
+                        <div class="col-lg-3">Chức vụ trong TCDN:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control" placeholder="Chức vụ trong TCDN">
+                        </div>
+                    </div>
+                    <div class="row row-input" *ngIf="data.customerType=='STAFF'">
+                        <div class="col-lg-3">Tên TCDN:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control" placeholder="Tên TCDN">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row row-input">
+                        <div class="col-lg-3">Tên khách hàng:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control" [ngModel]="dataCustomer.CommonName"
+                                placeholder="Tên khách hàng">
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Quận / Huyện:</div>
+                        <div class="col-lg-8">
+                            <input [disabled]="true" type="text" class="form-control"
+                                [ngModel]="dataCustomer.DistrictName" placeholder="Quận / Huyện">
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Số điện thoại:</div>
+                        <div class="col-lg-8">
+                            <input type="text" [ngModel]="dataCustomer.CustomerInfo?.phone || ''" class="form-control"
+                                placeholder="Số điện thoại" [disabled]="true">
+                        </div>
+                    </div>
+                    <div class="row row-input" *ngIf="data.customerType=='STAFF'">
+                        <div class="col-lg-3">MST/Mã quyết định/ Mã ngân sách:</div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="MST/Mã quyết định/ Mã ngân sách"
+                                [disabled]="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="title">Thông tin giao dịch</div>
+                <div class="col-lg-6">
+                    <div class="row row-input">
+                        <div class="col-lg-3">Loại thiết bị: </div>
+                        <div class="col-lg-8">
+                            <p-dropdown appPrimeDropDown [options]="dataListDevices" [(ngModel)]="data.deviceType"
+                                optionLabel="name" placeholder="--Loại thiết bị--" [showClear]="true" optionValue="code" (onChange)="changeDevice()"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Loại giao dịch: </div>
+                        <div class="col-lg-8">
+                            <p-dropdown appPrimeDropDown [options]="dataListDeviceType" [(ngModel)]="data.deviceCode"
+                                optionLabel="name" optionValue="code" placeholder="--Loại giao dịch--" [showClear]="true" (onChange)="changeDevice()"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Mã thiết bị: </div>
+                        <div class="col-lg-8">
+                            <p-dropdown appPrimeDropDown [options]="dataListDeviceIds" [(ngModel)]="data.deviceId"
+                                optionLabel="deviceInfo.ICCID" optionValue="deviceInfo.ICCID" placeholder="Chọn mã thiết bị" [showClear]="true"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Nhập lý do:</div>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" [(ngModel)]="data.reason">
+                        </div>
+                    </div>
+                    <div class="row row-input">
+                        <div class="col-lg-3">Phiếu yêu cầu:</div>
+                        <div class="col-lg-8">
+                            <input type="file" class="form-control" accept=".pdf, .jpg, .jpeg, .png"
+                                (change)="onFileChange($event)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <app-my-image [fileInput]="file" (listFiles)="handleFiles($event)"></app-my-image>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-footer">
+        <button pButton pRipple type="button" label="Duyệt" (click)="createRequestDevices()"></button>
+        <button pButton pRipple type="button" label="Quay lại" (click)="actionBack()" class="p-button-secondary"></button>
+        <!-- <img src="data:image/png;base64,{{base64test}}" alt="Ảnh" class="test--"> -->
+    </div>
+</app-template-base>

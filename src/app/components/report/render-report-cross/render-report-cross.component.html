@@ -1,0 +1,64 @@
+<app-template-base>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+
+        <div class="filters-left">
+            <div>
+                <p-calendar [(ngModel)]="data.filters.startDate" placeholder="Từ ngày" class="input-focus"
+                 dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div>
+                <p-calendar [(ngModel)]="data.filters.endDate" dateFormat="dd/mm/yy" placeholder="Đến ngày"
+                    class="input-focus"></p-calendar>
+            </div>
+            <div>
+                <p-dropdown [options]="configSetting.listRequestReport" [(ngModel)]="data.filters.requestType"
+                    optionLabel="name" optionValue="code" [showClear]="true" placeholder="--Loại giao dịch--"></p-dropdown>
+            </div>
+        </div>
+        <div class="filters-right">
+            <div>
+                <p-button pRipple label="Tìm kiếm" icon="pi pi-search" (onClick)="actionSearch()"></p-button>
+            </div>
+            <div>
+                <button pButton pRipple type="button" label="Xuất excel" (click)="exportExcel()"
+                    class="p-button-outlined p-button-secondary primeNG-customer-btn"></button>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="content-content">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <ng-container *ngFor="let header of headerTable">
+                        <th scope="col" [ngClass]="'header_' + header.split(' ').join('_')">{{header}}</th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of dataCrossCheck; let i = index">
+                    <td>{{item.stt}}</td>
+                    <td>{{item.agency}}</td>
+                    <td>{{item.customerName}}</td>
+                    <td>{{item.mst}}</td>
+                    <td>{{item.cccd}}</td>
+                    <td>{{item.requestType}}</td>
+                    <td>{{item.certificateProfileCode}}</td>
+                    <td>{{item.createdAt}}</td>
+                    <td>{{item.validFrom}}</td>
+                    <td>{{item.archiveTime}}</td>
+                    <td></td>
+                    <td>{{item.validTo}}</td>
+                    <td>{{item.refundForAgency}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p-paginator (onPageChange)="paginate($event)" [rows]="data.filters.perPage"
+                [totalRecords]="data.filters.total" [rowsPerPageOptions]="[10,20,30,50,100,200]"
+                [alwaysShow]="false"></p-paginator>
+        </div>
+    </div>
+</app-template-base>

@@ -1,0 +1,71 @@
+<p-dialog header="Thông tin chứng thư" [(visible)]="_display" [style]="{width: '50vw'}">
+    <div class="body_certificate_info">
+        <div class="modal-body">
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Tên: </label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.commonName}} </b>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="certificateInfo.organizationName">
+                <label class="col-sm-3 control-label">Tổ chức: </label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.organizationName}} </b>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="certificateInfo.title">
+                <label class="col-sm-3 control-label">Chức vụ: </label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.title}} </b>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">{{subTypeCard(certificateInfo.uid)}}:</label>
+                <div class="col-sm-8">
+                    <b>{{subValue(certificateInfo.uid)}} </b>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Địa Chỉ:</label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.stateOrProvinceName}} -
+                        {{certificateInfo.countryName}} </b>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Issued :</label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.issuer}} </b>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Serial CTS:</label>
+                <div class="col-sm-8">
+                    <b>{{certificateInfo.serial}} </b>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">subjectDN:</label>
+                <div class="col-sm-8">
+                    <b style="height: auto; word-break: break-all;">{{subjectDN}} </b>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Thời hạn:</label>
+                <div class="col-sm-8 " style="font-size: 15px;">
+                    <div >
+                        <b><span class="text-bold">Từ ngày </span> {{formatDateTime(certificateInfo.notBefore)}} <span
+                        class="text-bold"> đến ngày </span> {{formatDateTime(certificateInfo.notAfter)}}</b>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="actionCloseModal()" label="Đóng" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,98 @@
+<app-template-base>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-content">
+        <div class="row body_info_customer ">
+            <div class="col-lg-9 info_customer">
+                <div class="info_overview">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div><b>Khách hàng: </b><span>{{customer.TypeName}}</span></div>
+                            <div><b>Tên giao dịch: </b><span>{{customer.CommonName}}</span></div>
+                            <div><b>Địa chỉ: </b><span>{{customer.Adress}}</span></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div><b>Mã số thuế: </b><span>{{customer.IdentifyNo}}</span></div>
+                            <div><b>Email: </b><span>{{customer.Email}}</span></div>
+                            <div><b>Số điện thoại: </b><span>{{customer.Phone}}</span></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div><b>Ảnh giấy phép: </b><span></span></div>
+                        <ng-container *ngTemplateOutlet="showImage"></ng-container>
+                    </div>
+                    <div class="representative">
+                        <div><b>Thông tin người đại diện:
+                                <i class="fa-solid fa-circle-down" *ngIf="!showRepresentative"
+                                    (click)="showRepresentative=!showRepresentative"></i>
+                                <i class="fa-solid fa-circle-up" *ngIf="showRepresentative"
+                                    (click)="showRepresentative=!showRepresentative"></i>
+                            </b></div>
+                        <div class="info_representative" *ngIf="showRepresentative">
+                            <div><b>Họ tên: </b><span>{{customer.CustomerInfo?.representativeName || ''}}</span></div>
+                            <div>Ảnh CMND: </div>
+                            <ng-container *ngTemplateOutlet="showImage"></ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="tab_base">
+                        <p-tabView>
+                            <p-tabPanel header="Quản lý chứng thư">
+                                <div class="tab-content">
+                                    <app-list-request-content [customerId]="customerId"></app-list-request-content>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="Quản lý thiết bị">
+                                <div class="tab-content">
+                                    <app-render-device-list-content
+                                        [customerId]="customerId"></app-render-device-list-content>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+            <div class="info_cert">
+                <div class="cert_title">Danh sách chứng thư</div>
+                <div class="list_cert">
+                    <div *ngFor="let cert of dataCertificateCustomer" class="cert">
+                        <div class="cert_title">
+                            <i class="fa-solid fa-certificate"></i>
+                            <strong>{{cert?.certSerialNo || ''}}</strong>
+                        </div>
+                        <div class="panel-body1">
+                            <span ng-if="certificate.deviceType == 'TOKEN' || certificate.deviceType == null">
+                                <div><b>TokenSN</b> : <b>{{cert?.deviceInfo?.hardTokenSN}}</b></div>
+                            </span>
+                            <span ng-if="certificate.deviceType == 'SIM'">
+                                <div><b>ICCID</b> : <b>{{cert?.deviceInfo?.ICCID}}</b></div>
+                                <div>Số điện thoại : <b>{{cert?.deviceInfo?.phone}}</b> </div>
+                            </span>
+                            <p>Trạng thái : <b></b> </p>
+                            <p style="cursor: pointer" ng-click="action.showCertificateInfo(certificate.certSerialNo)"
+                            (click)="selectCertIdInfo=cert.certSerialNo">
+                                <i class="fa fa-eye" aria-hidden="true"></i>Thông tin</p>
+                            <p style="cursor: pointer" ng-click="action.showPukDetailModal(certificate)"
+                            (click)="selectCertIdPUK=cert.certSerialNo; PUK=cert?.deviceInfo?.PUK || '';"><i
+                                    class="fa fa-eye" aria-hidden="true"></i> Quản lý mã PUK</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-modal-certificate-info [(id)]="selectCertIdInfo"></app-modal-certificate-info>
+            <app-modal-certificate-puk [(id)]="selectCertIdPUK" [puk]="PUK"></app-modal-certificate-puk>
+        </div>
+
+    </div>
+
+    <ng-template #showImage>
+        <div class="listFile">
+            <div class="data_listFile">
+                <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" alt="Image"
+                    width="100px" height="75px" [preview]="true"></p-image>
+            </div>
+            <i class="fa-regular fa-circle-right icon_direction"></i>
+            <i class="fa-regular fa-circle-left icon_direction"></i>
+        </div>
+    </ng-template>
+</app-template-base>

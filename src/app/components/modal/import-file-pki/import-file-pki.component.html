@@ -1,0 +1,43 @@
+<p-dialog header="Import danh sách sim" [closable]="false" [(visible)]="_display" [style]="{width: '50vw'}">
+    <div class="body_certificate_info">
+        <div class="modal-body">
+            <div class="row1">
+                    <input type="file" (change)="changeFile($event)">
+                    <button icon="pi pi-replay" (click)="actionInsertSim()" type="button" label="Import"
+                    class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Import</button>
+            </div>
+            <div class="row" style="align-items: center;margin-bottom: 30px;">
+                <div class="col-md-8">
+                    <p-progressBar [value]="value"></p-progressBar>
+                </div>
+                <div class="col-md-4">
+                    <span>{{totalCompleted}}/{{listInfoSim.length}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">IMSI</th>
+                            <th scope="col">ICCID</th>
+                            <th scope="col" style="width: 40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody style="min-height: 100px;">
+                           <tr *ngFor="let sim of listInfoSim; let i=index">
+                            <td>{{sim.imsi}}</td>
+                            <td>{{sim.iccid}}</td>
+                            <td>
+                                <i *ngIf="arrSuccess.includes(i)" class="fa-solid fa-check" style="color: #2ebd2e;"></i>
+                                <i *ngIf="arrErr.includes(i)" class="fa-solid fa-x" style="color: red;"></i>
+                            </td>
+                           </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="actionCloseModal()" label="Đóng" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

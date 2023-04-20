@@ -1,0 +1,99 @@
+<div class="content-filters">
+    <div class="filters-left">
+        <div *ngIf="!params.customerId">
+            <input type="text" class="form-control input-focus" placeholder="Tìm kiếm..."
+                [(ngModel)]="data.filters.search" (input)="changeFilters('search')">
+        </div>
+        <div *ngIf="!params.customerId">
+            <p-calendar [(ngModel)]="data.filters.from" placeholder="Từ ngày" class="input-focus"
+                (onSelect)="changeFilters('from')" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+        <div *ngIf="!params.customerId">
+            <p-calendar [(ngModel)]="data.filters.to" placeholder="Đến ngày" dateFormat="dd/mm/yy"
+                class="input-focus"></p-calendar>
+        </div>
+        <div *ngIf="params.customerId">
+            <p-dropdown [options]="requestType" [(ngModel)]="params.requestType" optionLabel="name" optionValue="code"
+                placeholder="--Loại giao dịch--" [showClear]="true"></p-dropdown>
+        </div>
+        <div>
+            <p-dropdown [options]="status" [(ngModel)]="data.filters.status" optionLabel="name" optionValue="code"
+                (onChange)="changeFilters('status')" placeholder="--Trạng thái--" [showClear]="true"></p-dropdown>
+        </div>
+        <div *ngIf="params.customerId">
+            <p-dropdown [options]="deviceType" [(ngModel)]="params.deviceType" optionLabel="name" optionValue="code"
+                placeholder="--Thiết bị--" [showClear]="true"></p-dropdown>
+        </div>
+        <div *ngIf="!params.customerId">
+            <p-dropdown [options]="agencies" [(ngModel)]="data.filters.agency" placeholder="--Đại lý--"
+                optionLabel="name" optionValue="code" (onChange)="changeFilters('agency')" placeholder="--Đại lý--"
+                [showClear]="true"></p-dropdown>
+        </div>
+    </div>
+    <div class="filters-right">
+        <div>
+            <p-button pRipple label="Tìm kiếm" icon="pi pi-search" (onClick)="actionSearch()"></p-button>
+        </div>
+        <div *ngIf="!params.customerId">
+            <button icon="pi pi-replay" pButton pRipple type="button" label="Làm mới"
+                class="p-button-outlined p-button-secondary primeNG-customer-btn" (click)="listRequest()"></button>
+        </div>
+    </div>
+
+
+</div>
+<div class="content-content">
+    <p-scrollPanel [style]="{width: 'auto', height: 'auto'}">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" style="width: 11%;" *ngIf="!params.customerId">ID</th>
+                    <th scope="col" *ngIf="!params.customerId">Tên khách hàng</th>
+                    <th scope="col">Đại lý</th>
+                    <th scope="col">Loại giao dịch</th>
+                    <th scope="col">Gói cước</th>
+                    <th scope="col">Thời gian yêu cầu</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thời gian cập nhật</th>
+                    <!-- <th scope="col" *ngIf="params.customerId">Thiết bị</th> -->
+                    <th scope="col">Thiết bị</th>
+                    <th scope="col" *ngIf="params.customerId"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr class="record" *ngFor="let item of dataListRequest">
+                    <td (click)="detailRequest(item.Id)" title="{{ item.CustomerCer }}" *ngIf="!params.customerId">{{
+                        item.CustomerCer }}</td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.CustomerName }}" *ngIf="!params.customerId">{{
+                        item.CustomerName }}</td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.Agency }}">{{ item.Agency }}</td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.TypeRequestTitle }}">{{ item.TypeRequestTitle }}
+                    </td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.CertificateProfileCode }}">{{
+                        item.CertificateProfileCode }}</td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.TimeRequest | date }}">{{ item.TimeRequest |
+                        date }}</td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.StatusTitle }}">
+                        <div class="btn-status">
+                            <button class="btn-{{ item.StatusCode }}">{{ item.StatusTitle }}</button>
+                        </div>
+                    </td>
+                    <td (click)="detailRequest(item.Id)" title="{{ item.TimeUpdate | date }}">{{ item.TimeUpdate | date
+                        }}</td>
+                    <!-- <td (click)="detailRequest(item.Id)" *ngIf="params.customerId">{{ item.DeviceType }}</td> -->
+                    <td (click)="detailRequest(item.Id)">{{ item.DeviceType }}</td>
+                    <td data-toggle="modal" data-target="#modalHistoryRequest" (click)="selectRequestId = item.Id"
+                        class="icon_info" *ngIf="params.customerId"><i class="fa-solid fa-circle-info"></i></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </p-scrollPanel>
+    <div>
+        <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+            [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+    </div>
+    <app-modal-history-request [(requestId)]="selectRequestId"></app-modal-history-request>
+
+</div>

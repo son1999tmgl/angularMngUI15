@@ -1,0 +1,92 @@
+<app-template-base>
+    <app-loading></app-loading>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+        <app-loading></app-loading>
+        <div class="filters">
+            <div style="min-width: 300px;">
+                <input type="text" class="form-control input-focus" placeholder="Tìm kiếm tên đại lý, email, MXT "
+                    [(ngModel)]="params.freeText" (ngModelChange)="actionListAgency()">
+            </div>
+            <div>
+                <button icon="pi pi-replay" type="button" label="Thêm mới" class="btn btn-primary"
+                 (click)="showModalCreate()" (displayChange)="onDisplayChange($event)">
+                    <i class="fa-solid fa-plus"></i>
+                    Thêm mới</button>
+            </div>
+        </div>
+    </div>
+    <div class="content-content">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Tên đại lý</th>
+                    <th scope="col">Mã số thuế</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let agency of dataListAgency" class="record" 
+                [routerLink]="['/renderAgencyDetail']" [queryParams]= "{id: agency.id}">
+                    <td>{{agency?.name || ''}}</td>
+                    <td>{{agency?.taxCode || ''}}</td>
+                    <td>{{agency?.email || ''}}</td>
+                    <td>{{agency?.address || ''}}</td>
+                    <td>{{agency?.phone || ''}}</td>
+                    <ng-container *ngIf="agency.status == 'available'">
+                        <td>Hoạt động</td>
+                        <td class="icon_enable">
+                            <i class="fa-solid fa-ban" data-toggle="modal" data-target="#modalDisable"
+                                (click)="changeSelectAgency(agency.id)"></i>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="agency.status != 'available'">
+                        <td>Ngưng hoạt động</td>
+                        <td class="icon_disable"><i class="fa-regular fa-circle-check " data-toggle="modal"
+                                data-target="#modalEnable" (click)="changeSelectAgency(agency.id)"></i></td>
+                    </ng-container>
+
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+                [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+        </div>
+
+
+        <!-- Khôi phục -->
+        <app-modal-base [idModal]="'modalEnable'" [title]="'Khôi phục'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn khôi phục đại lý này ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalEnable class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+                    (click)="actionEnableAgency()">Đồng ý</button>
+            </div>
+        </app-modal-base>
+
+
+        <!-- Tạm dùng -->
+        <app-modal-base [idModal]="'modalDisable'" [title]="'Tạm dừng'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn tạm dừng đại lý này ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalDisable class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;"
+                    (click)="actionDisableAgency()">Đồng ý</button>
+            </div>
+        </app-modal-base>
+
+        <app-create-agency [(display)]="displayModalCreate"></app-create-agency>
+
+
+    </div>
+
+</app-template-base>

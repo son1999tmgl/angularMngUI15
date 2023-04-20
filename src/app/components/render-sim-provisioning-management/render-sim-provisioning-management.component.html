@@ -1,0 +1,74 @@
+<app-template-base>
+    <app-loading></app-loading>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+        <app-loading></app-loading>
+        <div class="row filters_sim">
+            <div class="col-md-6">
+                <input type="text" class="form-control input-focus" placeholder="Tìm kiếm..." [(ngModel)]="params.freeText" (ngModelChange)="actionListSim()">
+            </div>
+            <div class="col-md-4">
+                <p-dropdown [options]="configSetting.listStatusSim"  placeholder="--Trạng thái--" [(ngModel)]="params.status"
+                    optionLabel="name" optionValue="code" [showClear]="true" (ngModelChange)="actionListSim()"></p-dropdown>
+            </div>
+            <div class="col-md-2">
+                <button icon="pi pi-replay" (click)="showModalImportSim=true" type="button" label="Import"
+                    class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Import</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content-content">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">IMSI</th>
+                    <th scope="col">ICCID</th>
+                    <th scope="col">Số thuê bao</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let sim of listSim">
+                    <td>{{sim?.imsi || ''}}</td>
+                    <td>{{sim?.iccid || ''}}</td>
+                    <td>{{sim?.phone || ''}}</td>
+                    <td>
+                        <div [ngClass]="{'label label-table NOT_USE': sim.status === 'NOT_USE', 'label label-table USED': sim.status === 'USED', 'label label-table ARCHIVE': sim.status === 'ARCHIVE'}">
+                            <ng-container *ngIf="sim.status === 'NOT_USE'">Chưa dùng</ng-container>
+                            <ng-container *ngIf="sim.status === 'USED'">Đã dùng</ng-container>
+                            <ng-container *ngIf="sim.status === 'ARCHIVE'">Lưu trữ</ng-container>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="icon-delete" data-toggle="modal" *ngIf="sim.status === 'NOT_USE'" data-target="#modalDeleteSim" (click)="onDeleteSim(sim._id)">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </div>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+                [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+        </div>
+
+
+        <!-- Xoá -->
+        <app-modal-base [idModal]="'modalDeleteSim'" [title]="'Xoá sim'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn xoá sim không ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalDeleteSim class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;" (click)="deleteSim()">Duyệt</button>
+            </div>
+        </app-modal-base>
+        <app-import-file-pki [(display)]="showModalImportSim"></app-import-file-pki>
+    </div>
+
+</app-template-base>

@@ -1,0 +1,28 @@
+<p-dialog header="Thêm mới token" [(visible)]="display" [modal]="true" [style]="{width: '100vw', maxWidth: '800px'}"
+    (onHide)="closeModal()">
+    <div class="body_create_token">
+        <div class="form-group row">
+            <label class="col-sm-3 control-label" for="demo-is-inputsmall">Tên: </label>
+            <div class="col-sm-8">
+                <input type="text" placeholder="Tên" class="form-control" [(ngModel)]="token.name">
+                <div style="margin-top: 5px; color: red">{{ err?.name }}</div>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 control-label" for="demo-is-inputsmall">Code: </label>
+            <div class="col-sm-8">
+                <input autocomplete="off" type="text" placeholder="Mã số thuế" class="form-control" required
+                    [(ngModel)]="token.code">
+                <div style="margin-top: 5px; color: red">{{ err?.code }}</div>
+
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button type="button" (click)="actionCreateToken()" class="btn btn-secondary" style="background-color: #0d6efd;"
+            data-dismiss="modal">Cập nhật</button>
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+    </ng-template>
+</p-dialog>

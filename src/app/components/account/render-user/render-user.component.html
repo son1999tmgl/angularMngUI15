@@ -1,0 +1,88 @@
+<app-template-base>
+    <app-loading></app-loading>
+    <div class="content-header">{{ title }}</div>
+    <div class="content-filters">
+        <app-loading></app-loading>
+        <div class="row filters_user">
+            <div class="col-md-8">
+                <input type="text" class="form-control input-focus" placeholder="Tìm kiếm..." [(ngModel)]="params.name"
+                (ngModelChange)="actionListUser()">
+            </div>
+            <div class="col-md-4 btn_search">
+                <button icon="pi pi-replay" type="button" label="Làm mới"
+                    class="btn btn-primary"
+                    (click)="openModel({})"
+                    ><i class="fa-solid fa-plus"></i> Thêm mới</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-content">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Họ và tên</th>
+                    <th scope="col">Tài khoản</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Số điện thoại</th>
+                    <th scope="col">Hành động</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                    <tr *ngFor="let user of dataListUser" class="record">
+                        <td (click)="openModel(user)">{{user?.name || ''}}</td>
+                        <td (click)="openModel(user)">{{user?.account || ''}}</td>
+                        <td (click)="openModel(user)">{{user?.email || ''}}</td>
+                        <td (click)="openModel(user)">{{user?.phone || ''}}</td>
+                        <td>
+                            <div class="icon-circle bg-primary" (click)="openModel(user)">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </div>
+                            <div class="icon-circle bg-danger" data-target="#modalArchiveUser"
+                            data-toggle="modal" (click)="selectedUser=user" >
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div class="icon-circle bg-info" data-target="#modalResetPasswordUser"
+                            data-toggle="modal" (click)="selectedUser=user">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <div>
+            <p-paginator (onPageChange)="paginate($event)" [rows]="params.perPage" [totalRecords]="totalRecord"
+                [rowsPerPageOptions]="[10,20,30,50,100,200]" [alwaysShow]="false"></p-paginator>
+        </div>
+
+
+        <app-modal-user [display]="displayModal" (changeDisplay)="changeDisplay($event)" 
+        [user]="selectedUser"></app-modal-user>
+
+
+        <!-- modal -->
+        <!-- khoá -->
+        <app-modal-base [idModal]="'modalArchiveUser'" [title]="'Khoá tài khoản'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn khoá tài khoản này không ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalArchiveUser class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;" (click)="actionArchiveUser()">Duyệt</button>
+            </div>
+        </app-modal-base>
+
+        <!-- reset pw -->
+        <app-modal-base [idModal]="'modalResetPasswordUser'" [title]="'Reset mật khẩu'">
+            <div class="modal-body">
+                <span>Bạn có chắc muốn reset mật khẩu tài khoản này không ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeModalResetPasswordUser class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #294f75;" (click)="actionResetPasswordUser()">Duyệt</button>
+            </div>
+        </app-modal-base>
+    </div>
+
+</app-template-base>

@@ -1,0 +1,28 @@
+.content-filters{
+    .filters{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+.icon_disable i, .icon_enable i{
+    font-size: 1.3rem;
+    color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.icon_disable i:hover, .icon_enable i:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.icon_disable i{
+    background-color: green;
+}
+
+.icon_enable i{
+    background-color: red;
+}
+.record:hover {
+    cursor: pointer;
+}

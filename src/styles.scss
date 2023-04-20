@@ -1,0 +1,286 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+
+$height-logo: 60px;
+$heightTitle: 30px;
+$widthMenu: 250px;
+
+
+
+.hidden {
+    display: none !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+//primeNG
+p-calendar {
+    width: 300px;
+
+    .ng-trigger-overlayAnimation {
+        table {
+            width: 300px;
+            table-layout: fixed;
+        }
+    }
+
+    input {
+        padding: 7px !important;
+        box-shadow: none !important;
+    }
+}
+
+p-dropdown {
+    padding: 7px 0px;
+
+    .p-inputtext {
+        // min-width: 100px;
+        padding: 7px !important;
+    }
+}
+
+p-button {
+    button {
+        padding: 7px !important;
+    }
+}
+
+.primeNG-customer-btn {
+    padding: 7px !important;
+}
+
+p-dropdown {
+    .p-focus {
+        border-radius: none;
+        border-color: none;
+    }
+}
+p-tabView{
+    .p-highlight{
+        a{
+            background-color: #25476a !important;
+            color: white !important;
+        }
+        a:focus{
+            box-shadow: unset !important;
+        }
+    }
+    a:hover{
+        text-decoration: none !important;
+    }
+}
+
+
+
+.content-content {
+    table {
+        table-layout: fixed;
+    }
+}
+
+
+.input-focus:focus {
+    box-shadow: none !important;
+}
+
+
+// table
+th,
+td {
+    // font-weight: unset !important;
+    font-size: 0.9rem !important;
+}
+
+td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+}
+
+.content {
+    margin-top: -95px;
+    position: relative;
+    padding-left: 0px;
+
+    .content-header {
+        color: white;
+        font-size: 25px;
+        position: absolute;
+        top: calc(($heightTitle + 20px)*(-1));
+        width: 100%;
+        padding-right: 20px;
+    }
+
+    .content-filters {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 15px;
+
+        .filters-left {
+            display: flex;
+            row-gap: 10px;
+            column-gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filters-right {
+            display: flex;
+            row-gap: 10px;
+            column-gap: 10px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+    }
+
+    .content-filters,
+    .content-full {
+        min-height: 85px;
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .content-full {
+        width: 100%;
+        min-height: 100vh;
+        background-color: white;
+    }
+
+    .content-content {
+        padding: 20px;
+        width: 100%;
+        background-color: white;
+        min-height: 100vh;
+    }
+
+    .content-footer {
+        display: flex;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-top: 1px solid black;
+        padding-top: 20px;
+        column-gap: 15px;
+        justify-content: flex-end;
+        button {
+            padding: 6px !important;
+            font-size: 14px !important;
+        }
+        button:focus{
+            border: none !important;
+        }
+    }
+}
+
+
+
+
+// btn Trạng thái
+.btn-status {
+    button {
+        border-radius: 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-wrap: normal;
+        white-space: nowrap;
+        width: 100%;
+        color: white;
+    }
+
+    .btn-NEW {
+        background-color: greenyellow;
+    }
+
+    .btn-progress {
+        background-color: orange;
+    }
+
+    .btn-approved {
+        background-color: #25476a;
+    }
+
+    .btn-reject {
+        background-color: #f44336;
+    }
+
+    .btn-archive {
+        background-color: #e3e8ee;
+        color: black;
+    }
+
+    .btn-done {
+        background-color: #03a9f4;
+    }
+
+    .btn-issuedCertificate {
+        background-color: #7030a0;
+    }
+
+    .btn-pendingConfirmation {
+        background-color: rgb(170, 50, 50);
+    }
+
+    .btn-lackOfRecord {
+        background-color: #003399;
+    }
+}
+
+
+
+.row-input {
+    display: flex;
+    align-items: center;
+    margin-top: 20px !important;
+}
+
+
+// icon
+.icon-delete{
+    padding: 5px;
+    background-color: red;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.icon-delete:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+
+.icon-circle {
+    margin-right: 5px;
+    display: inline-block;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    transition: transform 0.3s ease;
+    color: white;
+}
+.icon-circle:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.record:hover {
+    cursor: pointer;
+}

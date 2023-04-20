@@ -1,0 +1,224 @@
+.top-left {
+  height: 60px;
+  background-color: #25476a;
+  padding: 0;
+  width: 250px;
+}
+
+.top-left .wrapper-top-left {
+  display: flex;
+  align-items: center;
+}
+
+.top-left .wrapper-top-left div {
+  color: white;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.top-right {
+  height: 60px;
+  background-color: #25476a;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.top-right i:hover {
+  cursor: pointer;
+}
+
+.bottom-left, .top-left {
+  transition: 0.3s;
+}
+
+.userInfo-action {
+  transition: 0.5s;
+}
+
+.bottom-left {
+  height: 80vh;
+  background-color: #fff;
+  margin-top: -150px;
+  width: 250px;
+}
+
+.bottom-right {
+  height: auto;
+  background-color: #e8eff3;
+  flex: 1;
+}
+
+.bottom-right .content {
+  width: 97%;
+  margin-left: 1%;
+  margin-top: -95px;
+  position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.bottom-right .content .content-header {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  top: calc(($heightTitle + 20px)*(-1));
+}
+
+.bottom-right .content .content-filters {
+  height: 85px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.bottom-right .content .content-content {
+  padding: 20px;
+  width: 100%;
+  background-color: white;
+  min-height: 100vh;
+}
+
+.headerLogo {
+  line-height: 60px;
+  width: 60px;
+}
+
+.wrapper-infoUser {
+  margin-bottom: 20px;
+  padding-top: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper-infoUser #avatar {
+  border-radius: 50%;
+  width: 80%;
+}
+
+.wrapper-infoUser .wrapper-username {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+}
+
+.wrapper-infoUser .wrapper-username .username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wrapper-infoUser .wrapper-username i {
+  margin-left: 10px;
+}
+
+.middle {
+  height: 150px;
+  background-color: #25476a;
+}
+
+.userInfo-action {
+  background-color: #f8f7f7;
+  width: 100%;
+  height: 90px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+.userInfo-action .userInfo-account a,
+.userInfo-action .userInfo-logout a {
+  color: black;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  text-decoration: none;
+}
+
+.userInfo-action .userInfo-account a:hover,
+.userInfo-action .userInfo-logout a:hover {
+  cursor: pointer;
+}
+
+.showMenu {
+  width: 60px !important;
+}
+
+.col-2 {
+  max-width: 300px;
+}
+
+.global-search {
+  margin: 20px auto;
+}
+
+#card-menuLeft {
+  width: 100%;
+  min-height: 50vh;
+  padding: 0 !important;
+}
+
+#card-menuLeft .wrapper_menu_item {
+  margin-top: 10px;
+  display: flex;
+  color: black;
+  background-color: white;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  gap: 15px;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+#card-menuLeft .wrapper_menu_item i {
+  width: 16px;
+  height: 16px;
+}
+
+#card-menuLeft .wrapper_menu_item:hover {
+  color: #25476a;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+#card-menuLeft .wrapper_menu_item.attack {
+  background-color: #25476a;
+  color: white;
+}
+
+.menuDown {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuDown .menu_itemIcon_showSubmenu {
+  position: absolute;
+  right: 0;
+}
+
+.menuDown .submenu li {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.menuDown .submenu li:hover {
+  color: #25476a;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+.row.heade, .row.middle, .row.content {
+  flex-wrap: nowrap;
+}
